@@ -1,26 +1,108 @@
 @import "tailwindcss";
 
+@theme {
+  /* Colores principales */
+  --color-primary: #18F281;
+  --color-primary-hover: #14D470;
+  --color-primary-active: #10B85E;
+  
+  --color-secondary: #0075F2;
+  --color-secondary-hover: #0066D9;
+  --color-secondary-active: #0057C0;
+  
+  --color-tertiary: #FF7C0A;
+  --color-tertiary-hover: #E66F09;
+  --color-tertiary-active: #CC6208;
+  
+  /* Backgrounds */
+  --color-background-light: #FFFFFF;
+  --color-background-dark: #0F172A;
+  
+  /* Text colors */
+  --color-text-black: #272D2D;
+  --color-text-white: #F5F5F5;
+  
+  /* Cards */
+  --color-card-light: #F5F5F5;
+  --color-card-dark: #1C2A4D;
+  
+  /* Estados */
+  --color-success: #22C55E;
+  --color-success-hover: #16A34A;
+  --color-success-active: #15803D;
+  
+  --color-error: #EF4444;
+  --color-error-hover: #DC2626;
+  --color-error-active: #B91C1C;
+}
+
+/* Clases personalizadas para el cambio de tema */
+.bg-card-light {
+  background-color: var(--color-card-light);
+}
+
+.dark .bg-card-light {
+  background-color: var(--color-card-light);
+}
+
+.dark .bg-card-dark {
+  background-color: var(--color-card-dark);
+}
+
+/* Navbar que cambia según el tema */
+.navbar-bg {
+  background-color: var(--color-background-light);
+  transition: background-color 0.3s ease;
+}
+
+.dark .navbar-bg {
+  background-color: var(--color-background-dark);
+}
+
+/* Text colors que cambian con el tema */
+.text-theme {
+  color: var(--color-text-black);
+  transition: color 0.3s ease;
+}
+
+.dark .text-theme {
+  color: var(--color-text-white);
+}
+
+/* Clases adicionales para el ColorGrid */
+.bg-background-light {
+  background-color: var(--color-background-light);
+}
+
+.bg-background-dark {
+  background-color: var(--color-background-dark);
+}
+
+.bg-text-black {
+  background-color: var(--color-text-black);
+}
+
+.bg-text-white {
+  background-color: var(--color-text-white);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Variables dinámicas para tema */
+  --background: var(--color-background-light);
+  --foreground: var(--color-text-black);
+  --card-bg: var(--color-card-light);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Modo oscuro - se activa con la clase .dark en html */
+.dark {
+  --background: var(--color-background-dark);
+  --foreground: var(--color-text-white);
+  --card-bg: var(--color-card-dark);
+  color-scheme: dark;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-manrope), sans-serif;
 }
