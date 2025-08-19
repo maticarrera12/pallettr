@@ -11,8 +11,6 @@ const manrope = Manrope({
   variable: "--font-manrope",
 });
 
-
-
 export const metadata: Metadata = {
   title: "Pallettr - AI Color Palette Generator",
   description:
@@ -36,7 +34,7 @@ export default function RootLayout({
         <ThemeProvider>
           <ThemeWrapper>
             <Navbar />
-            <main className="min-h-screen  max-w-full overflow-x-hidden pt-16">
+            <main className="min-h-screen max-w-full overflow-x-hidden pt-16 container-main">
               {children}
             </main>
             <Footer />

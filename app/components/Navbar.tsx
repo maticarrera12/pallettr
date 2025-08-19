@@ -156,7 +156,7 @@ const Navbar = memo(() => {
           <div className="flex items-center">
             <h1
               ref={logoRef}
-              className="text-xl sm:text-2xl font-bold text-primary leading-tight tracking-tight cursor-pointer select-none"
+              className="text-xl sm:text-2xl py-2 font-bold text-primary leading-tight tracking-tight cursor-pointer select-none"
               onMouseEnter={handleLogoHover}
               onMouseLeave={handleLogoLeave}
               tabIndex={0}
