@@ -49,6 +49,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* Asegurar que todos los contenedores respeten el ancho de la pantalla */
@@ -63,7 +64,6 @@ header,
 footer,
 nav {
   max-width: 100%;
-  overflow-x: hidden;
 }
 
 /* Clases personalizadas para el cambio de tema */
