@@ -133,7 +133,7 @@ const HowHelp = () => {
   return (
     <div
       id="features"
-      className="relative w-full max-w-full overflow-hidden py-10 px-4 sm:px-6 lg:px-8 gsap-animation-container"
+      className="relative w-full max-w-full overflow-hidden py-20 px-4 sm:px-6 lg:px-8"
     >
       {/* --- Continuation of tertiary blur from WhyUs --- */}
       <div className="absolute inset-0 -z-10">
@@ -160,7 +160,7 @@ const HowHelp = () => {
         {/* Services Grid */}
         <div
           ref={cardsGridRef}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 auto-rows-fr mb-20"
         >
           {/* Example Service Card */}
           <ServiceCard
@@ -173,8 +173,8 @@ const HowHelp = () => {
                 />
               </svg>
             }
-            title="Smart Palette Generation"
-            description="Our AI analyzes your prompts and creates harmonious color combinations that work perfectly together for any design project."
+            title="AI Palette Generator"
+            description="Instantly create unique and balanced color schemes powered by AI. Get fresh, creative palettes in seconds without guessing."
           />
           <ServiceCard
             icon={
@@ -186,8 +186,8 @@ const HowHelp = () => {
                 />
               </svg>
             }
-            title="Smart Palette Generation"
-            description="Our AI analyzes your prompts and creates harmonious color combinations that work perfectly together for any design project."
+            title="Photo Color Extractor"
+            description="Upload any image and let the app pull out its most striking colors. Turn inspiration into ready-to-use palettes."
           />
           <ServiceCard
             icon={
@@ -199,8 +199,8 @@ const HowHelp = () => {
                 />
               </svg>
             }
-            title="Smart Palette Generation"
-            description="Our AI analyzes your prompts and creates harmonious color combinations that work perfectly together for any design project."
+            title="Contrast Checker"
+            description="Ensure your designs are always accessible and readable. Instantly check color contrast ratios for WCAG compliance."
           />
           <ServiceCard
             icon={
@@ -212,7 +212,7 @@ const HowHelp = () => {
                 />
               </svg>
             }
-            title="Smart Palette Generation"
+            title="Live Palette Preview"
             description="Our AI analyzes your prompts and creates harmonious color combinations that work perfectly together for any design project."
           />
         </div>

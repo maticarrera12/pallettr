@@ -34,27 +34,25 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative rounded-xl p-[3px] transition-all duration-300 ${className}`}
+      className={`relative rounded-xl p-[3px] transition-all duration-300 flex h-full ${className}`} // <-- agregamos flex y h-full
       style={{
         background: isHovered
           ? `radial-gradient(
-              250px circle at var(--x, 50%) var(--y, 50%),
-            var(--color-primary),
-              transparent 80%
-            )`
+          250px circle at var(--x, 50%) var(--y, 50%),
+        var(--color-primary),
+          transparent 80%
+        )`
           : "transparent",
       }}
     >
-      {/* Inner content */}
-      <div className="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
-        <div className="flex items-center space-x-4">
-          {/* Icon container */}
+      <div className="bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 flex-1 flex flex-col">
+        {/* Inner content */}
+        <div className="flex items-center space-x-4 flex-1">
           <div className="bg-background-light dark:bg-background-dark w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
             <div className="text-primary text-xl">{icon}</div>
           </div>
 
-          {/* Content */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 flex flex-col justify-center">
             <h3 className="text-theme font-bold text-lg sm:text-xl md:text-2xl mb-3 leading-tight">
               {title}
             </h3>
