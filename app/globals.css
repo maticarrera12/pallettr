@@ -2,38 +2,66 @@
 
 @theme {
   /* Colores principales */
-  --color-primary: #18F281;
-  --color-primary-hover: #14D470;
-  --color-primary-active: #10B85E;
-  
-  --color-secondary: #0075F2;
-  --color-secondary-hover: #0066D9;
-  --color-secondary-active: #0057C0;
-  
-  --color-tertiary: #FF7C0A;
-  --color-tertiary-hover: #E66F09;
-  --color-tertiary-active: #CC6208;
-  
+  --color-primary: #18f281;
+  --color-primary-rgb: 24, 242, 129;
+  --color-primary-hover: #14d470;
+  --color-primary-active: #10b85e;
+
+  --color-secondary: #0075f2;
+  --color-secondary-hover: #0066d9;
+  --color-secondary-active: #0057c0;
+
+  --color-tertiary: #ff7c0a;
+  --color-tertiary-hover: #e66f09;
+  --color-tertiary-active: #cc6208;
+
   /* Backgrounds */
-  --color-background-light: #FFFFFF;
-  --color-background-dark: #0F172A;
-  
+  --color-background-light: #ffffff;
+  --color-background-dark: #0f172a;
+
   /* Text colors */
-  --color-text-black: #272D2D;
-  --color-text-white: #F5F5F5;
-  
+  --color-text-black: #272d2d;
+  --color-text-white: #f5f5f5;
+
   /* Cards */
-  --color-card-light: #F5F5F5;
-  --color-card-dark: #1C2A4D;
-  
+  --color-card-light: #f5f5f5;
+  --color-card-dark: #1c2a4d;
+
   /* Estados */
-  --color-success: #22C55E;
-  --color-success-hover: #16A34A;
-  --color-success-active: #15803D;
-  
-  --color-error: #EF4444;
-  --color-error-hover: #DC2626;
-  --color-error-active: #B91C1C;
+  --color-success: #22c55e;
+  --color-success-hover: #16a34a;
+  --color-success-active: #15803d;
+
+  --color-error: #ef4444;
+  --color-error-hover: #dc2626;
+  --color-error-active: #b91c1c;
+}
+
+/* Prevenir overflow horizontal globalmente */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+}
+
+/* Asegurar que todos los contenedores respeten el ancho de la pantalla */
+#__next,
+#root,
+main,
+div,
+section,
+article,
+aside,
+header,
+footer,
+nav {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* Clases personalizadas para el cambio de tema */
@@ -42,7 +70,7 @@
 }
 
 .dark .bg-card-light {
-  background-color: var(--color-card-light);
+  background-color: var(--color-card-dark);
 }
 
 .dark .bg-card-dark {
@@ -74,6 +102,10 @@
   background-color: var(--color-background-light);
 }
 
+.dark .bg-background-light {
+  background-color: var(--color-background-dark);
+}
+
 .bg-background-dark {
   background-color: var(--color-background-dark);
 }
@@ -91,6 +123,10 @@
   --background: var(--color-background-light);
   --foreground: var(--color-text-black);
   --card-bg: var(--color-card-light);
+
+  /* Variables de fuentes */
+  --font-manrope: var(--font-manrope);
+  --font-playfair: var(--font-playfair);
 }
 
 /* Modo oscuro - se activa con la clase .dark en html */
@@ -105,4 +141,73 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-manrope), sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Mejoras de tipografía para diferentes elementos */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+h1 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+
+p {
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* Mejoras para inputs */
+input,
+textarea {
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Clases de fuentes personalizadas */
+.font-manrope {
+  font-family: var(--font-manrope), sans-serif;
+}
+
+.font-playfair {
+  font-family: var(--font-playfair), serif;
+}
+
+/* Eliminar flechas solo en inputs numéricos */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Transiciones suaves para botones */
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Efectos hover para botones del tema */
+.theme-toggle {
+  transition: all 0.2s ease-in-out;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
 }
