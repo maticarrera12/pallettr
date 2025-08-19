@@ -3,16 +3,20 @@ import ServiceCard from "../ui/ServiceCard";
 
 const HowHelp = () => {
   return (
-    <div className="w-full max-w-full overflow-hidden py-10 px-4 sm:px-6 lg:px-8">
+    <div id="features" className="relative w-full max-w-full overflow-hidden py-10 px-4 sm:px-6 lg:px-8">
+      {/* --- Continuation of tertiary blur from WhyUs --- */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute -top-[300px] right-1/3 w-[400px] h-[400px] bg-gradient-to-br from-secondary/20 via-tertiary/30 to-primary/20 rounded-full blur-2xl opacity-50 dark:opacity-30"></div>
+      </div>
+
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-theme mb-6 leading-tight tracking-tight">
-            How We Help
+            How Can We Help You?
           </h2>
           <p className="text-lg sm:text-xl md:text-2xl text-theme opacity-80 max-w-4xl mx-auto leading-relaxed font-medium">
-            Discover how our AI-powered color palette generator transforms your
-            creative process
+          We turn your ideas into beautiful color combinations effortlessly.
           </p>
         </div>
 

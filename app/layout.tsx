@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Playfair_Display } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ThemeWrapper from "./components/ThemeWrapper";
@@ -11,10 +11,7 @@ const manrope = Manrope({
   variable: "--font-manrope",
 });
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-});
+
 
 export const metadata: Metadata = {
   title: "Pallettr - AI Color Palette Generator",
@@ -30,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <body
-        className={`${manrope.variable} ${playfair.variable} antialiased text-theme transition-colors`}
+        className={`${manrope.variable} antialiased text-theme transition-colors`}
         style={{
           backgroundColor: "var(--background)",
           color: "var(--foreground)",
@@ -39,7 +36,7 @@ export default function RootLayout({
         <ThemeProvider>
           <ThemeWrapper>
             <Navbar />
-            <main className="min-h-screen px-4 sm:px-6 lg:px-8 max-w-full overflow-x-hidden pt-16">
+            <main className="min-h-screen  max-w-full overflow-x-hidden pt-16">
               {children}
             </main>
             <Footer />

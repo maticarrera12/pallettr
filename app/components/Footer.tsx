@@ -1,7 +1,14 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
+const smoothScrollTo = (elementId: string) => {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
+};
 
 const Footer = () => {
   return (
@@ -11,7 +18,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="flex flex-col space-y-6">
             {/* Brand Name - Elegant Script Style */}
-            <h1 className="text-4xl sm:text-5xl font-playfair text-primary font-bold tracking-wide leading-tight">
+            <h1 className="text-4xl sm:text-5xl font-bold text-primary tracking-wide leading-tight">
               Pallettr
             </h1>
 
@@ -23,24 +30,51 @@ const Footer = () => {
 
           {/* Navigation Links */}
           <nav className="flex flex-row space-x-10 lg:space-x-16">
-            <Link
-              href="/"
-              className="text-lg sm:text-xl text-theme hover:text-primary transition-colors font-semibold"
+            <button
+              onClick={() => smoothScrollTo('home')}
+              className="text-lg sm:text-xl font-semibold cursor-pointer bg-transparent border-none p-0 underline-offset-4 hover:underline transition-colors duration-300"
+              style={{
+                color: 'var(--color-text-theme)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'var(--color-primary)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'var(--color-text-theme)';
+              }}
             >
               Home
-            </Link>
-            <Link
-              href="/why-us"
-              className="text-lg sm:text-xl text-theme hover:text-primary transition-colors font-semibold"
+            </button>
+            <button
+              onClick={() => smoothScrollTo('why-us')}
+              className="text-lg sm:text-xl font-semibold cursor-pointer bg-transparent border-none p-0 underline-offset-4 hover:underline transition-colors duration-300"
+              style={{
+                color: 'var(--color-text-theme)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'var(--color-primary)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'var(--color-text-theme)';
+              }}
             >
               Why Us?
-            </Link>
-            <Link
-              href="/services"
-              className="text-lg sm:text-xl text-theme hover:text-primary transition-colors font-semibold"
+            </button>
+            <button
+              onClick={() => smoothScrollTo('features')}
+              className="text-lg sm:text-xl font-semibold cursor-pointer bg-transparent border-none p-0 underline-offset-4 hover:underline transition-colors duration-300"
+              style={{
+                color: 'var(--color-text-theme)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'var(--color-primary)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'var(--color-text-theme)';
+              }}
             >
-              Services
-            </Link>
+              Features
+            </button>
           </nav>
         </div>
 

@@ -3,51 +3,34 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import WishlistButton from "./ui/WishlistButton";
+import ThemeToggle from "./ui/ThemeToggle";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Register GSAP plugins
+
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Constants
+
 const SCROLL_THRESHOLD = 50;
 const ANIMATION_DURATION = 0.3;
 const NAVBAR_HEIGHT = 64;
 
-// Theme icons mapping
-const THEME_ICONS = {
-  light: "☀️",
-  dark: "🌙",
-  system: "🖥️",
-} as const;
 
-// Theme cycle order
-const THEME_CYCLE = ["light", "dark", "system"] as const;
 
-/**
- * Professional Navbar Component
- * Features:
- * - Responsive design with mobile-first approach
- * - Smooth scroll-based animations
- * - Theme switching with visual feedback
- * - Optimized performance with memoization
- * - Accessibility compliant
- * - Professional styling with glassmorphism effect
- */
+
+
 const Navbar = memo(() => {
-  // Hooks
+
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Refs for GSAP animations
   const navbarRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLHeadingElement>(null);
   const borderRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<gsap.core.Timeline | null>(null);
 
-  // Memoized values
   const backgroundStyle = useMemo(
     () => ({
       backdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
@@ -66,26 +49,12 @@ const Navbar = memo(() => {
     [isScrolled, resolvedTheme]
   );
 
-  const currentThemeIcon = useMemo(
-    () => THEME_ICONS[theme === "system" ? "system" : resolvedTheme || "light"],
-    [theme, resolvedTheme]
-  );
-
-  // Event handlers
   const handleScroll = useCallback(() => {
     const scrolled = window.scrollY > SCROLL_THRESHOLD;
     if (scrolled !== isScrolled) {
       setIsScrolled(scrolled);
     }
   }, [isScrolled]);
-
-  const toggleTheme = useCallback(() => {
-    const currentIndex = THEME_CYCLE.indexOf(
-      theme as (typeof THEME_CYCLE)[number]
-    );
-    const nextIndex = (currentIndex + 1) % THEME_CYCLE.length;
-    setTheme(THEME_CYCLE[nextIndex]);
-  }, [theme, setTheme]);
 
   const handleLogoHover = useCallback(() => {
     if (logoRef.current) {
@@ -107,9 +76,9 @@ const Navbar = memo(() => {
     }
   }, []);
 
-  // Effects
+
   useEffect(() => {
-    // Scroll listener with throttling
+ 
     let ticking = false;
     const throttledScrollHandler = () => {
       if (!ticking) {
@@ -128,7 +97,7 @@ const Navbar = memo(() => {
   }, [handleScroll]);
 
   useEffect(() => {
-    // Initial entrance animation
+  
     if (navbarRef.current) {
       animationRef.current = gsap.timeline();
       animationRef.current.fromTo(
@@ -187,7 +156,7 @@ const Navbar = memo(() => {
           <div className="flex items-center">
             <h1
               ref={logoRef}
-              className="text-xl sm:text-2xl font-playfair font-bold text-primary leading-tight tracking-tight cursor-pointer select-none"
+              className="text-xl sm:text-2xl font-bold text-primary leading-tight tracking-tight cursor-pointer select-none"
               onMouseEnter={handleLogoHover}
               onMouseLeave={handleLogoLeave}
               tabIndex={0}
@@ -201,29 +170,10 @@ const Navbar = memo(() => {
           {/* Navigation Items */}
           <div className="flex items-center space-x-3 sm:space-x-4">
             {/* Theme Toggle Button */}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="group relative flex items-center justify-center w-10 h-10 rounded-full border border-primary/20 bg-transparent hover:bg-primary hover:border-primary transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
-              aria-label={`Switch to ${
-                THEME_CYCLE[
-                  (THEME_CYCLE.indexOf(theme as (typeof THEME_CYCLE)[number]) +
-                    1) %
-                    THEME_CYCLE.length
-                ]
-              } theme`}
-              title={`Current theme: ${theme}. Click to cycle themes.`}
-            >
-              <span
-                className="text-lg group-hover:text-white transition-colors duration-200"
-                aria-hidden="true"
-              >
-                {currentThemeIcon}
-              </span>
-            </button>
+            <ThemeToggle />
 
             {/* Wishlist Button */}
-            <WishlistButton size="sm" />
+            <WishlistButton size="md" />
           </div>
         </div>
       </div>

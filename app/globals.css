@@ -126,7 +126,6 @@ nav {
 
   /* Variables de fuentes */
   --font-manrope: var(--font-manrope);
-  --font-playfair: var(--font-playfair);
 }
 
 /* Modo oscuro - se activa con la clase .dark en html */
@@ -187,9 +186,7 @@ textarea {
   font-family: var(--font-manrope), sans-serif;
 }
 
-.font-playfair {
-  font-family: var(--font-playfair), serif;
-}
+
 
 /* Eliminar flechas solo en inputs numéricos */
 input[type="number"]::-webkit-outer-spin-button,

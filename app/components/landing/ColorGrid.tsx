@@ -8,62 +8,63 @@ const ColorGrid = () => {
       {/* GRID */}
       <div
         className="
-          grid grid-cols-3 grid-rows-3 gap-2 
-          w-[250px] h-[250px] 
-          sm:w-[280px] sm:h-[280px] 
-          md:w-[350px] md:h-[350px] 
+          grid grid-cols-3 grid-rows-3 gap-0 
+          w-[320px] h-[320px] 
+          sm:w-[350px] sm:h-[350px] 
+          md:w-[400px] md:h-[400px] 
           lg:w-[500px] lg:h-[500px] 
           xl:w-[600px] xl:h-[600px] 
           2xl:w-[700px] 2xl:h-[700px]
-          p-2 rounded-lg
+          rounded-lg overflow-hidden
           mx-auto
+          
         "
         style={{
           background: `linear-gradient(to right, var(--color-background-light) 50%, var(--color-background-dark) 50%)`,
         }}
       >
-        {/* 1: semicirculo negro izq */}
-        <div className="w-full h-full bg-text-black rounded-l-full"></div>
+        {/* 1: quarter circle primary */}
+        <div className="w-full h-full bg-primary rounded-br-full"></div>
 
-        {/* 2: diamante naranja */}
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="w-2/3 h-2/3 bg-tertiary rotate-45 transform origin-center"></div>
+        {/* 2: diamond tertiary */}
+        <div className="w-full h-full bg-tertiary "></div>
+
+        {/* 3: right semicircle card-light (spans 2 rows) */}
+        <div className="w-full h-full bg-card-light rounded-l-full row-span-2"></div>
+
+        {/* 4: square outline card-dark */}
+        <div className="w-full h-full border-8 md:border-[16px] border-card-dark bg-transparent"></div>
+
+        {/* 5: full circle primary */}
+        <div className="w-full h-full bg-primary rounded-full"></div>
+
+        {/* 7: quarter circle text-black bottom left */}
+        <div className="w-full h-full rounded-tr-full" style={{backgroundColor: 'var(--color-text-black)'}}></div>
+
+        {/* 8: triangle text-black filled */}
+        <div className="w-full h-full">
+          <svg viewBox="0 0 100 100" className="w-full h-full">
+            <polygon points="50,0 100,100 0,100" 
+                     fill="var(--color-secondary)" />
+          </svg>
         </div>
 
-        {/* 3 + 6: semicirculo blanco (ocupa 2 filas) */}
-        <div className="w-full h-full bg-card-light rounded-r-full row-span-2"></div>
-
-        {/* 4: cuadrado azul con borde */}
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="w-3/4 h-3/4 border-[16px] border-secondary"></div>
-        </div>
-
-        {/* 5: círculo verde */}
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="w-3/4 h-3/4 bg-primary rounded-full"></div>
-        </div>
-
-        {/* 7: cuarto de círculo verde */}
-        <div className="w-full h-full bg-primary rounded-tl-full"></div>
-
-        {/* 8: triángulo con bordes */}
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="w-3/4 h-3/4 border-[16px] border-card-dark"></div>
-        </div>
-
-        {/* 9: semicírculo naranja */}
-        <div className="w-full h-full bg-tertiary rounded-tr-full"></div>
+        {/* 9: quarter circle tertiary bottom right */}
+        <div className="w-full h-full bg-tertiary rounded-tl-full"></div>
       </div>
 
-      {/* INPUT + BOTÓN */}
-      <div className="flex mt-8 gap-4 items-center w-full max-w-[250px] sm:max-w-[280px] md:max-w-[350px] lg:max-w-[500px] xl:max-w-[600px] 2xl:max-w-[700px] px-2 mb-8">
+      <div className="
+        flex flex-col lg:flex-row mt-8 gap-2 items-center px-2 mb-8
+        w-[320px] sm:w-[350px] md:w-[400px] lg:w-[500px] xl:w-[600px] 2xl:w-[700px]
+        mx-auto
+      ">
         <input
           type="text"
-          placeholder="write here your prompt"
-          className="text-primary px-4 py-2 outline-none text-md font-medium flex-[2] border border-primary rounded-xl focus:border-primary transition-colors"
+          placeholder="Write here your prompt"
+          className="text-primary px-4 py-2 outline-none text-md font-medium w-full lg:w-2/3 border border-primary rounded-xl focus:border-primary transition-colors"
         />
-        <button className="bg-primary px-4 py-2 text-white font-semibold hover:bg-primary-hover transition-colors rounded-xl flex-1">
-          Try
+        <button className="bg-primary text-white font-semibold hover:bg-primary-hover transition-colors rounded-xl px-4 py-2 w-full lg:flex-1">
+          Try It
         </button>
       </div>
     </div>
