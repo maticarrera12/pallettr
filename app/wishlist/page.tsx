@@ -60,24 +60,6 @@ export default function WishlistPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
-              htmlFor="name"
-              className="block text-sm font-medium text-text-primary mb-2"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 border border-border-light dark:border-border-dark rounded-lg bg-card-light dark:bg-card-dark text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Enter your name"
-              required
-            />
-          </div>
-
-          <div>
-            <label
               htmlFor="email"
               className="block text-sm font-medium text-text-primary mb-2"
             >

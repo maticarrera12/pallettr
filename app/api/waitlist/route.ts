@@ -3,7 +3,7 @@ import { supabase } from "../../lib/supabase";
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, name } = await request.json();
+    const { email } = await request.json();
 
     // Validate email format
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -34,10 +34,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Insert new waitlist entry
+    // Insert new waitlist entry (name will be null)
     const { error: insertError } = await supabase.from("waitlist").insert({
       email,
-      name: name || null,
+      name: null,
       notified: false,
     });
 

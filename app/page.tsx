@@ -1,19 +1,13 @@
 import Hero from "./components/landing/Hero";
-import WhyUs from "./components/landing/WhyUs";
 import HowHelp from "./components/landing/HowHelp";
+import WhyUs from "./components/landing/WhyUs";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div>
-      <section id="home">
-        <Hero />
-      </section>
-      <section id="why-us">
-        <WhyUs />
-      </section>
-      <section id="features">
-        <HowHelp />
-      </section>
-    </div>
+    <>
+      <Hero />
+      <HowHelp />
+      <WhyUs />
+    </>
   );
 }

@@ -159,14 +159,6 @@ const Navbar = memo(() => {
 
           {/* Navigation Items */}
           <div className="flex items-center space-x-3 sm:space-x-4">
-            {/* Waitlist Link */}
-            <a
-              href="/waitlist"
-              className="text-text-black dark:text-text-white hover:text-primary dark:hover:text-primary transition-colors duration-200 font-medium px-3 py-2 rounded-lg hover:bg-primary/10"
-            >
-              Join Waitlist
-            </a>
-
             {/* Theme Toggle Button */}
             <ThemeToggle />
 
