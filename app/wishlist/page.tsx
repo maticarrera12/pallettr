@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 
 export default function WishlistPage() {
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -22,7 +21,7 @@ export default function WishlistPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, name }),
+        body: JSON.stringify({ email }),
       });
 
       const data = await response.json();
@@ -31,7 +30,6 @@ export default function WishlistPage() {
         setIsSuccess(true);
         setMessage("Successfully joined the waitlist!");
         setEmail("");
-        setName("");
       } else {
         setIsSuccess(false);
         setMessage(data.error || "Failed to join waitlist");
@@ -45,19 +43,19 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background-light dark:bg-background-dark flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-text-primary mb-4">
+    <div className="min-h-screen  bg-background-light dark:bg-background-dark flex items-center justify-center p-2">
+      <div className= "max-w-[480px]">
+        <div className="text-center mb-8 px-4">
+          <h1 className="text-3xl font-bold text-text-primary mb-4">
             Join Our Waitlist
           </h1>
-          <p className="text-text-secondary">
+          <p className="text-base text-text-secondary px-2">
             Be the first to know when we launch our AI-powered color palette
             generator!
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 px-4">
           <div>
             <label
               htmlFor="email"
@@ -87,7 +85,7 @@ export default function WishlistPage() {
 
         {message && (
           <div
-            className={`mt-4 p-4 rounded-lg ${
+            className={`mt-4 p-4 rounded-lg mx-4 ${
               isSuccess
                 ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
                 : "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
