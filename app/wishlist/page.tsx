@@ -2,18 +2,16 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function WishlistPage() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setMessage("");
 
     try {
       const response = await fetch("/api/waitlist", {
@@ -27,16 +25,23 @@ export default function WishlistPage() {
       const data = await response.json();
 
       if (response.ok) {
-        setIsSuccess(true);
-        setMessage("Successfully joined the waitlist!");
+        toast.success("Successfully joined the waitlist!");
         setEmail("");
       } else {
-        setIsSuccess(false);
-        setMessage(data.error || "Failed to join waitlist");
+        // Show Sonner toast for errors
+        if (
+          data.error?.includes("already exists") ||
+          data.error?.includes("already in use")
+        ) {
+          toast.error("This email is already on our waitlist!");
+        } else if (data.error?.includes("Invalid email")) {
+          toast.error("Please enter a valid email address");
+        } else {
+          toast.error(data.error || "Failed to join waitlist");
+        }
       }
     } catch (error) {
-      setIsSuccess(false);
-      setMessage("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -44,7 +49,7 @@ export default function WishlistPage() {
 
   return (
     <div className="min-h-screen  bg-background-light dark:bg-background-dark flex items-center justify-center p-2">
-      <div className= "max-w-[480px]">
+      <div className="max-w-[480px]">
         <div className="text-center mb-8 px-4">
           <h1 className="text-3xl font-bold text-text-primary mb-4">
             Join Our Waitlist
@@ -82,18 +87,6 @@ export default function WishlistPage() {
             {isLoading ? "Joining..." : "Join Waitlist"}
           </button>
         </form>
-
-        {message && (
-          <div
-            className={`mt-4 p-4 rounded-lg mx-4 ${
-              isSuccess
-                ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
-                : "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
-            }`}
-          >
-            {message}
-          </div>
-        )}
       </div>
     </div>
   );

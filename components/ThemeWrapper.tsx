@@ -1,6 +1,6 @@
 "use client";
 
-import { useTheme } from "../contexts/ThemeContext";
+import { useTheme } from "@/app/contexts/ThemeContext";
 import { useEffect } from "react";
 
 export default function ThemeWrapper({

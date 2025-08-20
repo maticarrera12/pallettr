@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useTheme } from "../contexts/ThemeContext";
+import { useTheme } from "../app/contexts/ThemeContext";
 import WishlistButton from "./ui/WishlistButton";
 import ThemeToggle from "./ui/ThemeToggle";
 import { gsap } from "gsap";

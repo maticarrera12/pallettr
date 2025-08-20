@@ -1,5 +1,5 @@
 import React from "react";
-import { ColorPalette } from "../../utils/colorUtils";
+import { ColorPalette } from "../../app/utils/colorUtils";
 
 /**
  * Component to display the generated color palette

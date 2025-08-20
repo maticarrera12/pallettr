@@ -34,11 +34,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Insert new waitlist entry (name will be null)
+    // Insert new waitlist entry
     const { error: insertError } = await supabase.from("waitlist").insert({
       email,
-      name: null,
-      notified: false,
     });
 
     if (insertError) {

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "../globals.css";
 import { ThemeProvider } from "../contexts/ThemeContext";
-import ThemeWrapper from "../components/ThemeWrapper";
+
+import { Toaster } from "sonner";
+import ThemeWrapper from "@/components/ThemeWrapper";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -32,6 +34,7 @@ export default function WishlistLayout({
         <ThemeProvider>
           <ThemeWrapper>{children}</ThemeWrapper>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );
