@@ -71,11 +71,11 @@ nav {
   background-color: var(--color-card-light);
 }
 
-.dark .bg-card-light {
-  background-color: var(--color-card-dark);
+.bg-card-light-fixed {
+  background-color: var(--color-card-light);
 }
 
-.dark .bg-card-dark {
+.dark .bg-card-light {
   background-color: var(--color-card-dark);
 }
 

@@ -7,22 +7,15 @@ import ThemeToggle from "./ui/ThemeToggle";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
-
 
 const SCROLL_THRESHOLD = 50;
 const ANIMATION_DURATION = 0.3;
 const NAVBAR_HEIGHT = 64;
 
-
-
-
-
 const Navbar = memo(() => {
-
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -37,8 +30,8 @@ const Navbar = memo(() => {
       WebkitBackdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
       backgroundColor: isScrolled
         ? resolvedTheme === "dark"
-          ? "rgba(15, 23, 42, 0.85)"
-          : "rgba(255, 255, 255, 0.85)"
+          ? "var(--color-background-dark-transparent)"
+          : "var(--color-background-light-transparent)"
         : resolvedTheme === "dark"
         ? "var(--color-background-dark)"
         : "var(--color-background-light)",
@@ -76,9 +69,7 @@ const Navbar = memo(() => {
     }
   }, []);
 
-
   useEffect(() => {
- 
     let ticking = false;
     const throttledScrollHandler = () => {
       if (!ticking) {
@@ -97,7 +88,6 @@ const Navbar = memo(() => {
   }, [handleScroll]);
 
   useEffect(() => {
-  
     if (navbarRef.current) {
       animationRef.current = gsap.timeline();
       animationRef.current.fromTo(
@@ -169,6 +159,14 @@ const Navbar = memo(() => {
 
           {/* Navigation Items */}
           <div className="flex items-center space-x-3 sm:space-x-4">
+            {/* Waitlist Link */}
+            <a
+              href="/waitlist"
+              className="text-text-black dark:text-text-white hover:text-primary dark:hover:text-primary transition-colors duration-200 font-medium px-3 py-2 rounded-lg hover:bg-primary/10"
+            >
+              Join Waitlist
+            </a>
+
             {/* Theme Toggle Button */}
             <ThemeToggle />
 

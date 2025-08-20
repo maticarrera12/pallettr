@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 interface WishlistButtonProps {
   className?: string;
@@ -31,7 +32,13 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({
 
   const classes = `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${className}`;
 
-  return <button type="button" className={classes}>Wishlist</button>;
+  return (
+    <Link href="/wishlist">
+      <button type="button" className={classes}>
+        Wishlist
+      </button>
+    </Link>
+  );
 };
 
 export default WishlistButton;
