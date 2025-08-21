@@ -14,7 +14,7 @@ export default function WishlistPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/waitlist", {
+      const response = await fetch("/api/wishlist", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

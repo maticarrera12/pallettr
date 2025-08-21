@@ -37,6 +37,30 @@ export type Database = {
         };
         Relationships: [];
       };
+      api_usage: {
+        Row: {
+          id: string;
+          ip_address: string;
+          usage_count: number;
+          last_used: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          ip_address: string;
+          usage_count?: number;
+          last_used?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          ip_address?: string;
+          usage_count?: number;
+          last_used?: string;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -181,3 +205,36 @@ export const Constants = {
 export type WaitlistRow = Tables<"waitlist">;
 export type WaitlistInsert = TablesInsert<"waitlist">;
 export type WaitlistUpdate = TablesUpdate<"waitlist">;
+
+export type ApiUsageRow = Tables<"api_usage">;
+export type ApiUsageInsert = TablesInsert<"api_usage">;
+export type ApiUsageUpdate = TablesUpdate<"api_usage">;
+
+/**
+ * Obtiene la IP real del usuario desde la request
+ * Maneja casos de proxy, load balancer, etc.
+ */
+export function getClientIP(request: Request): string {
+  // Intentar obtener IP de headers comunes de proxy
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    // x-forwarded-for puede contener múltiples IPs, tomar la primera
+    return forwarded.split(",")[0].trim();
+  }
+
+  const realIP = request.headers.get("x-real-ip");
+  if (realIP) {
+    return realIP;
+  }
+
+  // Fallback para desarrollo local
+  return "127.0.0.1";
+}
+
+/**
+ * Verifica si una IP está en la lista de IPs permitidas (para desarrollo)
+ */
+export function isAllowedIP(ip: string): boolean {
+  const allowedIPs = process.env.ALLOWED_IPS?.split(",") || [];
+  return allowedIPs.includes(ip) || ip === "127.0.0.1" || ip === "::1";
+}

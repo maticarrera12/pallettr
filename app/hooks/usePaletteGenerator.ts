@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { toast } from "sonner";
 import {
   ColorPalette,
   applyPaletteToCSS,
@@ -13,7 +14,6 @@ import {
 interface UsePaletteGeneratorReturn {
   // State
   isLoading: boolean;
-  error: string | null;
   currentPalette: ColorPalette | null;
 
   // Actions
@@ -24,7 +24,6 @@ interface UsePaletteGeneratorReturn {
 
 export const usePaletteGenerator = (): UsePaletteGeneratorReturn => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [currentPalette, setCurrentPalette] = useState<ColorPalette | null>(
     null
   );
@@ -35,12 +34,11 @@ export const usePaletteGenerator = (): UsePaletteGeneratorReturn => {
    */
   const generatePalette = useCallback(async (prompt: string) => {
     if (!prompt.trim()) {
-      setError("Please enter a prompt");
+      toast.error("Please enter a prompt");
       return;
     }
 
     setIsLoading(true);
-    setError(null);
 
     try {
       const response = await fetch("/api/generate-palette", {
@@ -54,6 +52,30 @@ export const usePaletteGenerator = (): UsePaletteGeneratorReturn => {
       const data = await response.json();
 
       if (!response.ok) {
+        if (response.status === 429) {
+          // Rate limit exceeded
+          toast.error(data.message || "Rate limit exceeded", {
+            description:
+              "You've reached your free trial limit. Please join our waitlist for unlimited access.",
+            action: {
+              label: "Join Waitlist",
+              onClick: () => {
+                if (data.redirectTo) {
+                  window.location.href = data.redirectTo;
+                }
+              },
+            },
+            duration: 10000,
+          });
+
+          // Redirección automática después de 5 segundos
+          if (data.redirectTo) {
+            setTimeout(() => {
+              window.location.href = data.redirectTo;
+            }, 5000);
+          }
+          return;
+        }
         throw new Error(data.error || "Failed to generate palette");
       }
 
@@ -65,12 +87,19 @@ export const usePaletteGenerator = (): UsePaletteGeneratorReturn => {
       // Update state
       setCurrentPalette(palette);
 
-      // Clear any previous errors
-      setError(null);
+      // Show success toast
+      toast.success("Palette generated successfully!", {
+        description: `Created "${prompt}" palette`,
+        duration: 3000,
+      });
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "An unexpected error occurred";
-      setError(errorMessage);
+
+      toast.error("Failed to generate palette", {
+        description: errorMessage,
+        duration: 5000,
+      });
 
       // If there's a fallback palette in the error response, still apply it
       if (err instanceof Error && err.message.includes("fallback")) {
@@ -100,7 +129,7 @@ export const usePaletteGenerator = (): UsePaletteGeneratorReturn => {
   const resetPalette = useCallback(() => {
     resetToDefaultColors();
     setCurrentPalette(null);
-    setError(null);
+    toast.success("Palette reset to default colors");
   }, []);
 
   /**
@@ -109,12 +138,11 @@ export const usePaletteGenerator = (): UsePaletteGeneratorReturn => {
   const applyPalette = useCallback((palette: ColorPalette) => {
     applyPaletteToCSS(palette);
     setCurrentPalette(palette);
-    setError(null);
+    toast.success("Palette applied successfully");
   }, []);
 
   return {
     isLoading,
-    error,
     currentPalette,
     generatePalette,
     resetPalette,

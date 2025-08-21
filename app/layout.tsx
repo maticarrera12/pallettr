@@ -6,6 +6,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ThemeWrapper from "@/components/ThemeWrapper";
+import { Toaster } from "@/components/ui/sonner";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -41,6 +42,7 @@ export default function RootLayout({
             <Footer />
           </ThemeWrapper>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );
