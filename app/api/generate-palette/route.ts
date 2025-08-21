@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { supabase } from "@/app/lib/supabase";
+import { getClientIP, isAllowedIP } from "@/app/lib/utils";
 
 /**
  * API route for generating color palettes using Google Gemini 1.5 Pro
@@ -10,8 +12,40 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_API_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
+// Configuración del rate limiting
+const MAX_FREE_REQUESTS = 5;
+const RATE_LIMIT_WINDOW_HOURS = 24; // Reset cada 24 horas
+
 export async function POST(request: NextRequest) {
   try {
+    // Obtener IP del cliente
+    const clientIP = getClientIP(request);
+    console.log("🔍 Client IP:", clientIP);
+    console.log("🔍 Is allowed IP:", isAllowedIP(clientIP));
+
+    // Verificar rate limiting (excepto para IPs permitidas en desarrollo)
+    if (!isAllowedIP(clientIP)) {
+      console.log("🔍 Checking rate limit for IP:", clientIP);
+      const rateLimitResult = await checkRateLimit(clientIP);
+      console.log("🔍 Rate limit result:", rateLimitResult);
+
+      if (!rateLimitResult.allowed) {
+        console.log("🚫 Rate limit exceeded for IP:", clientIP);
+        return NextResponse.json(
+          {
+            error: "Rate limit exceeded",
+            message:
+              "You've reached your free trial limit. Please join our wishlist for unlimited access.",
+            redirectTo: "/wishlist",
+            remainingRequests: rateLimitResult.remainingRequests,
+            resetTime: rateLimitResult.resetTime,
+          },
+          { status: 429 }
+        );
+      }
+    } else {
+      console.log("✅ IP allowed, skipping rate limit check");
+    }
 
     const { prompt } = await request.json();
 
@@ -72,8 +106,6 @@ Return ONLY a JSON object with this exact structure:
 }
 `;
 
-
-
     // Call Gemini API
     const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
       method: "POST",
@@ -109,7 +141,7 @@ Return ONLY a JSON object with this exact structure:
     }
 
     const data = await response.json();
-    console.log("Gemini response data:", JSON.stringify(data, null, 2));
+    // console.log("Gemini response data:", JSON.stringify(data, null, 2)); // ← Comentar esta línea
 
     const generatedText = data.candidates[0]?.content?.parts[0]?.text;
 
@@ -117,7 +149,7 @@ Return ONLY a JSON object with this exact structure:
       throw new Error("No content generated from Gemini");
     }
 
-    console.log("Generated text:", generatedText);
+    // console.log("Generated text:", generatedText); // ← Comentar esta línea
 
     // Parse the JSON response from Gemini
     let parsedPalette;
@@ -126,7 +158,7 @@ Return ONLY a JSON object with this exact structure:
       const jsonMatch = generatedText.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         parsedPalette = JSON.parse(jsonMatch[0]);
-        console.log("Parsed palette:", parsedPalette);
+        // console.log("Parsed palette:", parsedPalette); // ← Comentar esta línea
       } else {
         throw new Error("No JSON found in response");
       }
@@ -166,7 +198,11 @@ Return ONLY a JSON object with this exact structure:
       },
     };
 
-    console.log("Returning transformed palette");
+    // IMPORTANTE: Incrementar el contador de uso ANTES de retornar la respuesta
+    console.log("🔍 Incrementing usage count for IP:", clientIP);
+    await incrementUsageCount(clientIP);
+    console.log("✅ Usage count incremented successfully");
+
     return NextResponse.json({ palette: transformedPalette });
   } catch (error) {
     console.error("Error generating palette:", error);
@@ -182,6 +218,142 @@ Return ONLY a JSON object with this exact structure:
       },
       { status: 500 }
     );
+  }
+}
+
+/**
+ * Verifica si el usuario puede hacer más requests
+ */
+async function checkRateLimit(ip: string): Promise<{
+  allowed: boolean;
+  remainingRequests: number;
+  resetTime: string;
+}> {
+  try {
+    console.log("🔍 Checking rate limit for IP:", ip);
+
+    // Obtener el uso actual
+    const { data: usage, error } = await supabase
+      .from("api_usage")
+      .select("usage_count, last_used")
+      .eq("ip_address", ip)
+      .single();
+
+    console.log("🔍 Supabase query result:", { usage, error });
+
+    if (error && error.code !== "PGRST116") {
+      // PGRST116 = no rows found
+      console.error("❌ Error checking rate limit:", error);
+      // En caso de error, permitir la request (fail open)
+      return {
+        allowed: true,
+        remainingRequests: MAX_FREE_REQUESTS,
+        resetTime: new Date().toISOString(),
+      };
+    }
+
+    if (!usage) {
+      console.log("🆕 First time using API for IP:", ip);
+      // Primera vez usando la API
+      return {
+        allowed: true,
+        remainingRequests: MAX_FREE_REQUESTS,
+        resetTime: new Date().toISOString(),
+      };
+    }
+
+    console.log("📊 Current usage for IP:", ip, "Count:", usage.usage_count);
+
+    // Verificar si han pasado 24 horas desde el último uso
+    const lastUsed = new Date(usage.last_used);
+    const now = new Date();
+    const hoursSinceLastUse =
+      (now.getTime() - lastUsed.getTime()) / (1000 * 60 * 60);
+
+    if (hoursSinceLastUse >= RATE_LIMIT_WINDOW_HOURS) {
+      // Reset del contador después de 24 horas
+      await supabase
+        .from("api_usage")
+        .update({ usage_count: 0, last_used: now.toISOString() })
+        .eq("ip_address", ip);
+
+      return {
+        allowed: true,
+        remainingRequests: MAX_FREE_REQUESTS,
+        resetTime: now.toISOString(),
+      };
+    }
+
+    const remainingRequests = Math.max(
+      0,
+      MAX_FREE_REQUESTS - usage.usage_count
+    );
+    const allowed = usage.usage_count < MAX_FREE_REQUESTS;
+
+    // Calcular cuándo se resetea el contador
+    const resetTime = new Date(
+      lastUsed.getTime() + RATE_LIMIT_WINDOW_HOURS * 60 * 60 * 1000
+    );
+
+    console.log("📊 Rate limit check result:", { allowed, remainingRequests });
+
+    return {
+      allowed,
+      remainingRequests,
+      resetTime: resetTime.toISOString(),
+    };
+  } catch (error) {
+    console.error("❌ Error in checkRateLimit:", error);
+    // En caso de error, permitir la request (fail open)
+    return {
+      allowed: true,
+      remainingRequests: MAX_FREE_REQUESTS,
+      resetTime: new Date().toISOString(),
+    };
+  }
+}
+
+/**
+ * Incrementa el contador de uso para una IP
+ */
+async function incrementUsageCount(ip: string): Promise<void> {
+  try {
+    console.log("📊 Attempting to increment usage count for IP:", ip);
+
+    // Usar la función SQL que creamos
+    const { data, error } = await supabase.rpc("update_api_usage", { ip });
+
+    console.log("🔍 RPC result:", { data, error });
+
+    if (error) {
+      console.error("❌ Error with RPC, trying fallback method:", error);
+      // Fallback: intentar insert/update manual
+      const { data: existing } = await supabase
+        .from("api_usage")
+        .select("usage_count")
+        .eq("ip_address", ip)
+        .single();
+
+      if (existing) {
+        await supabase
+          .from("api_usage")
+          .update({
+            usage_count: existing.usage_count + 1,
+            last_used: new Date().toISOString(),
+          })
+          .eq("ip_address", ip);
+      } else {
+        await supabase.from("api_usage").insert({
+          ip_address: ip,
+          usage_count: 1,
+          last_used: new Date().toISOString(),
+        });
+      }
+    } else {
+      console.log("✅ RPC call successful, data:", data);
+    }
+  } catch (error) {
+    console.error("❌ Error in incrementUsageCount:", error);
   }
 }
 
