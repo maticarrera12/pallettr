@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@layer components {
+  .check-icon-primary {
+    filter: brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%)
+      hue-rotate(86deg) brightness(118%) contrast(119%);
+  }
+}
+
 @theme {
   /* Colores principales */
   --color-primary: #18f281;

@@ -29,6 +29,8 @@ const ColorGrid = () => {
           sm:w-[350px] sm:h-[350px] 
           md:w-[400px] md:h-[400px] 
           lg:w-[500px] lg:h-[500px] 
+          xl:w-[600px] xl:h-[600px] 
+          2xl:w-[700px] 2xl:h-[700px] 
           rounded-lg overflow-hidden
           mx-auto
           transition-all duration-500 ease-in-out
@@ -77,7 +79,7 @@ const ColorGrid = () => {
       <div
         className="
         flex flex-col lg:flex-row mt-8 gap-2 items-center px-2 mb-8
-        w-[320px] sm:w-[350px] md:w-[400px] lg:w-[500px] xl:w-[500px] 2xl:w-[500px]
+        w-[320px] sm:w-[350px] md:w-[400px] lg:w-[500px] xl:w-[600px] 2xl:w-[700px]
         mx-auto
       "
       >

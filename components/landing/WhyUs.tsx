@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WishlistButton from "../ui/WishlistButton";
 import TalkToMeButton from "../ui/TalkToMeButton";
+import Image from "next/image";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -208,18 +209,38 @@ const WhyUs = () => {
             </div>
 
             <div ref={featuresRef}>
-              <h4 className="font-bold text-xl sm:text-2xl md:text-3xl text-theme mb-4 leading-tight">
-                Powerful
-              </h4>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-6 h-6 relative">
+                  <Image
+                    src="/icons/check-mark.svg"
+                    alt="Check mark"
+                    fill
+                    className="check-icon-primary"
+                  />
+                </div>
+                <h4 className="font-bold text-xl sm:text-2xl md:text-3xl text-theme leading-tight">
+                  Powerful
+                </h4>
+              </div>
               <p className="text-base sm:text-lg text-dark-900 dark:text-gray-300 mb-8 leading-relaxed">
                 With AI-driven algorithms, users can explore endless
                 possibilities and create professional-grade color palettes
                 efficiently.
               </p>
 
-              <h4 className="font-bold text-xl sm:text-2xl md:text-3xl text-theme mb-4 leading-tight">
-                Creative
-              </h4>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-6 h-6 relative">
+                  <Image
+                    src="/icons/check-mark.svg"
+                    alt="Check mark"
+                    fill
+                    className="check-icon-primary"
+                  />
+                </div>
+                <h4 className="font-bold text-xl sm:text-2xl md:text-3xl text-theme leading-tight">
+                  Creative
+                </h4>
+              </div>
               <p className="text-base sm:text-lg text-dark-900 dark:text-gray-300 mb-0 leading-relaxed">
                 The app helps users generate unique and imaginative color
                 palettes, sparking creativity in their design projects.
@@ -256,9 +277,19 @@ const WhyUs = () => {
               },
             ].map(({ title, text }, i) => (
               <div key={i} className="mb-8 last:mb-0">
-                <h4 className="font-bold text-xl sm:text-2xl md:text-3xl text-theme mb-4 leading-tight">
-                  {title}
-                </h4>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-6 h-6 relative">
+                    <Image
+                      src="/icons/check-mark.svg"
+                      alt="Check mark"
+                      fill
+                      className="check-icon-primary"
+                    />
+                  </div>
+                  <h4 className="font-bold text-xl sm:text-2xl md:text-3xl text-theme leading-tight">
+                    {title}
+                  </h4>
+                </div>
                 <p className="text-base sm:text-lg text-dark-900 dark:text-gray-300 leading-relaxed">
                   {text}
                 </p>

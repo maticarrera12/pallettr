@@ -12,11 +12,8 @@ const GEMINI_API_URL =
 
 export async function POST(request: NextRequest) {
   try {
-    console.log("API called - checking environment...");
-    console.log("GEMINI_API_KEY exists:", !!GEMINI_API_KEY);
 
     const { prompt } = await request.json();
-    console.log("Received prompt:", prompt);
 
     if (!prompt || typeof prompt !== "string") {
       return NextResponse.json(
@@ -44,18 +41,27 @@ Generate a professional color palette based on this description: "${prompt}"
 
 CRITICAL REQUIREMENTS:
 - Primary, secondary, and tertiary colors MUST NOT be white (#FFFFFF) or black (#000000)
-- All colors must comply with WCAG AA contrast standards (4.5:1 minimum)
-- Primary colors should have 10-35% lightness and 80-100% saturation (BRIGHT, STRONG, and VIBRANT)
-- Secondary colors should have 10-35% lightness and 75-100% saturation (BRIGHT, STRONG, and VIBRANT)
-- Tertiary colors should have 10-35% lightness and 70-100% saturation (BRIGHT, STRONG, and VIBRANT)
-- Background colors should be subtle and not pure white/black
-- Card colors should provide good contrast with text
-- Text colors must ensure excellent readability
+- All colors must comply with WCAG AA contrast standards (minimum 4.5:1 ratio)
+- Primary colors should have 10–35% lightness and 85–100% saturation (EXTREMELY BRIGHT, STRONG, and VIBRANT)
+- Secondary colors should have 10–35% lightness and 80–100% saturation (VERY BRIGHT, STRONG, and VIBRANT)
+- Tertiary colors should have 10–35% lightness and 75–100% saturation (BRIGHT, STRONG, and VIBRANT)
+- Colors must generally be varied unless the user explicitly requests a monochromatic palette or a theme that demands dominance of one hue.
+- Background colors should be subtle, soft, and never pure white/black
+- Card colors must provide clear separation from the background and ensure excellent text contrast
+- Text colors must always ensure outstanding readability across all backgrounds
 
+STYLE AND MEANING REQUIREMENTS:
+- Always generate palettes that are **harmonious and professional** using color theory (analogous, triadic, or complementary schemes)
+- Colors should feel **dynamic, lively, and energetic by default** unless the user’s prompt specifies a calm, muted, or minimalistic vibe
+- If the prompt contains **adjectives** (e.g., "playful", "elegant", "futuristic"), strongly reflect them in the palette’s mood
+- Always balance **aesthetic appeal, accessibility, and theme relevance**
+- Ensure the palette works well in both light and dark modes
+
+OUTPUT FORMAT:
 Return ONLY a JSON object with this exact structure:
 {
   "primary": "#HEXCODE",
-  "secondary": "#HEXCODE", 
+  "secondary": "#HEXCODE",
   "tertiary": "#HEXCODE",
   "backgroundLight": "#HEXCODE",
   "backgroundDark": "#HEXCODE",
@@ -64,15 +70,9 @@ Return ONLY a JSON object with this exact structure:
   "textBlack": "#HEXCODE",
   "textWhite": "#HEXCODE"
 }
-
-Color Guidelines:
-- Use harmonious color theory (analogous, triadic, or complementary schemes)
-- Ensure colors work well together in both light and dark themes
-- Consider the emotional and semantic meaning of the prompt
-- Generate professional, accessible, and visually appealing palettes
 `;
 
-    console.log("Sending request to Gemini...");
+
 
     // Call Gemini API
     const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
