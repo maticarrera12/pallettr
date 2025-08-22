@@ -1,7 +1,6 @@
 "use client";
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useTheme } from "../app/contexts/ThemeContext";
 import WishlistButton from "./ui/WishlistButton";
 import ThemeToggle from "./ui/ThemeToggle";
 import Logo from "./ui/Logo";
@@ -17,7 +16,6 @@ const ANIMATION_DURATION = 0.3;
 const NAVBAR_HEIGHT = 64;
 
 const Navbar = memo(() => {
-  const { theme, setTheme, resolvedTheme, mounted } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
 
   const navbarRef = useRef<HTMLElement>(null);
@@ -29,17 +27,13 @@ const Navbar = memo(() => {
       backdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
       WebkitBackdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
       backgroundColor: isScrolled
-        ? resolvedTheme === "dark"
-          ? "var(--color-background-dark-transparent)"
-          : "var(--color-background-light-transparent)"
-        : resolvedTheme === "dark"
-        ? "var(--color-background-dark)"
-        : "var(--color-background-light)",
+        ? "var(--color-background-transparent)"
+        : "var(--color-background)",
       boxShadow: isScrolled
         ? "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)"
         : "none",
     }),
-    [isScrolled, resolvedTheme]
+    [isScrolled]
   );
 
   const handleScroll = useCallback(() => {

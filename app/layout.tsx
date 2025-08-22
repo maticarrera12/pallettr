@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "./contexts/ThemeContext";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -30,20 +30,13 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              (function() {
-                try {
-                  // Solo establecer tema inicial básico para evitar parpadeo
-                  var savedTheme = localStorage.getItem('theme');
-                  if (savedTheme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                  } else if (savedTheme === 'light') {
-                    document.documentElement.classList.add('light');
-                  }
-                  // Si es 'system' o no hay tema, no hacer nada - el contexto lo manejará
-                } catch (e) {
-                  console.warn('Error applying initial theme:', e);
+              // Limpiar localStorage del tema para forzar detección del sistema
+              if (typeof window !== 'undefined') {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme && savedTheme !== 'system') {
+                  localStorage.removeItem('theme');
                 }
-              })();
+              }
             `,
           }}
         />
@@ -55,7 +48,14 @@ export default function RootLayout({
           color: "var(--foreground)",
         }}
       >
-        <ThemeProvider>
+        <NextThemesProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          storageKey="theme"
+          themes={["light", "dark", "system"]}
+        >
           <ThemeWrapper>
             <Navbar />
             <main className="min-h-screen max-w-full overflow-x-hidden pt-16 container-main">
@@ -63,7 +63,7 @@ export default function RootLayout({
             </main>
             <Footer />
           </ThemeWrapper>
-        </ThemeProvider>
+        </NextThemesProvider>
         <Toaster />
       </body>
     </html>
