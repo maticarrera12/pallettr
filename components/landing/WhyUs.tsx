@@ -194,7 +194,7 @@ const WhyUs = () => {
               </h2>
               <p
                 ref={descriptionRef}
-                className="text-base sm:text-lg text-dark-900 dark:text-gray-300 mb-8 max-w-2xl leading-relaxed font-medium"
+                className="text-base sm:text-lg text-theme mb-8 max-w-2xl leading-relaxed font-medium"
               >
                 Focus on Your Vision, We&apos;ll Perfect the Palette.
               </p>
@@ -222,7 +222,7 @@ const WhyUs = () => {
                   Powerful
                 </h4>
               </div>
-              <p className="text-base sm:text-lg text-dark-900 dark:text-gray-300 mb-8 leading-relaxed">
+              <p className="text-base sm:text-lg text-theme mb-8 leading-relaxed">
                 With AI-driven algorithms, users can explore endless
                 possibilities and create professional-grade color palettes
                 efficiently.
@@ -241,7 +241,7 @@ const WhyUs = () => {
                   Creative
                 </h4>
               </div>
-              <p className="text-base sm:text-lg text-dark-900 dark:text-gray-300 mb-0 leading-relaxed">
+              <p className="text-base sm:text-lg text-theme  mb-0 leading-relaxed">
                 The app helps users generate unique and imaginative color
                 palettes, sparking creativity in their design projects.
               </p>
@@ -290,7 +290,7 @@ const WhyUs = () => {
                     {title}
                   </h4>
                 </div>
-                <p className="text-base sm:text-lg text-dark-900 dark:text-gray-300 leading-relaxed">
+                <p className="text-base sm:text-lg text-theme  leading-relaxed">
                   {text}
                 </p>
               </div>

@@ -133,6 +133,10 @@ nav {
   --foreground: var(--color-text-black);
   --card-bg: var(--color-card-light);
 
+  /* Variables para el Navbar */
+  --color-background: var(--color-background-light);
+  --color-background-transparent: rgba(255, 255, 255, 0.8);
+
   /* Variables de fuentes */
   --font-manrope: var(--font-manrope);
 }
@@ -142,6 +146,11 @@ nav {
   --background: var(--color-background-dark);
   --foreground: var(--color-text-white);
   --card-bg: var(--color-card-dark);
+
+  /* Variables para el Navbar en modo oscuro */
+  --color-background: var(--color-background-dark);
+  --color-background-transparent: rgba(15, 23, 42, 0.8);
+
   color-scheme: dark;
 }
 

@@ -22,21 +22,23 @@ const TalkToMeButton: React.FC<TalkToMeButtonProps> = ({
   };
 
   return (
-    <div className={`group flex items-center ${sizeClasses[size]} rounded-md cursor-pointer transition-all duration-300 hover:translate-x-2.5 ${className}`}>
-      <span className="text-primary font-semibold group-hover:text-primary-hover transition-colors cursor-pointer">
+    <div
+      className={`group flex items-center transform  ${sizeClasses[size]} rounded-md cursor-pointer transition-all duration-300 hover:translate-x-2.5 ${className}`}
+    >
+      <span className="text-primary font-semibold transform  group-hover:text-primary-hover group-hover:translate-x-1 transition-colors cursor-pointer">
         Talk to me
       </span>
-      <svg 
+      <svg
         className={`${arrowSizes[size]} text-primary transition-all duration-300 group-hover:text-primary-hover group-hover:translate-x-1`}
-        fill="none" 
-        stroke="currentColor" 
+        fill="none"
+        stroke="currentColor"
         viewBox="0 0 24 24"
       >
-        <path 
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
-          strokeWidth={2} 
-          d="M13 7l5 5m0 0l-5 5m5-5H6" 
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M13 7l5 5m0 0l-5 5m5-5H6"
         />
       </svg>
     </div>
