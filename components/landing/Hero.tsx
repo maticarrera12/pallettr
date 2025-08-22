@@ -25,7 +25,7 @@ const Hero = () => {
   return (
     <div
       id="home"
-      className="flex flex-col min-h-dvh w-full max-w-full overflow-hidden relative lg:flex-row px-4 sm:px-6 lg:px-8"
+      className="flex flex-col min-h-dvh w-full max-w-full overflow-hidden relative lg:flex-row px-4 sm:px-6 lg:px-8 pt-10"
     >
       <div className="hero-section flex-1 flex flex-col  items-start sm:px-4 lg:px-8 relative z-10">
         <div className="w-full max-w-4xl">

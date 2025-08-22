@@ -26,6 +26,28 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  // Solo establecer tema inicial básico para evitar parpadeo
+                  var savedTheme = localStorage.getItem('theme');
+                  if (savedTheme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else if (savedTheme === 'light') {
+                    document.documentElement.classList.add('light');
+                  }
+                  // Si es 'system' o no hay tema, no hacer nada - el contexto lo manejará
+                } catch (e) {
+                  console.warn('Error applying initial theme:', e);
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${manrope.variable} antialiased text-theme transition-colors`}
         style={{

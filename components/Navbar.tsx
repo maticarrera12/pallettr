@@ -4,6 +4,7 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTheme } from "../app/contexts/ThemeContext";
 import WishlistButton from "./ui/WishlistButton";
 import ThemeToggle from "./ui/ThemeToggle";
+import Logo from "./ui/Logo";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -16,11 +17,10 @@ const ANIMATION_DURATION = 0.3;
 const NAVBAR_HEIGHT = 64;
 
 const Navbar = memo(() => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme, mounted } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
 
   const navbarRef = useRef<HTMLElement>(null);
-  const logoRef = useRef<HTMLHeadingElement>(null);
   const borderRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<gsap.core.Timeline | null>(null);
 
@@ -48,26 +48,6 @@ const Navbar = memo(() => {
       setIsScrolled(scrolled);
     }
   }, [isScrolled]);
-
-  const handleLogoHover = useCallback(() => {
-    if (logoRef.current) {
-      gsap.to(logoRef.current, {
-        scale: 1.05,
-        duration: ANIMATION_DURATION,
-        ease: "power2.out",
-      });
-    }
-  }, []);
-
-  const handleLogoLeave = useCallback(() => {
-    if (logoRef.current) {
-      gsap.to(logoRef.current, {
-        scale: 1,
-        duration: ANIMATION_DURATION,
-        ease: "power2.out",
-      });
-    }
-  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -128,7 +108,7 @@ const Navbar = memo(() => {
   return (
     <nav
       ref={navbarRef}
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out"
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out py-4"
       style={backgroundStyle}
       role="navigation"
       aria-label="Main navigation"
@@ -144,17 +124,7 @@ const Navbar = memo(() => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <h1
-              ref={logoRef}
-              className="text-xl sm:text-2xl py-2 font-bold text-primary leading-tight tracking-tight cursor-pointer select-none"
-              onMouseEnter={handleLogoHover}
-              onMouseLeave={handleLogoLeave}
-              tabIndex={0}
-              role="button"
-              aria-label="Pallettr home"
-            >
-              Pallettr
-            </h1>
+            <Logo size="md" />
           </div>
 
           {/* Navigation Items */}

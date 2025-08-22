@@ -1,11 +1,13 @@
 "use client";
 
+import Logo from "./ui/Logo";
+
 const smoothScrollTo = (elementId: string) => {
   const element = document.getElementById(elementId);
   if (element) {
     element.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
+      behavior: "smooth",
+      block: "start",
     });
   }
 };
@@ -18,9 +20,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="flex flex-col space-y-6">
             {/* Brand Name - Elegant Script Style */}
-            <h1 className="text-4xl sm:text-5xl font-bold text-primary tracking-wide leading-tight">
-              Pallettr
-            </h1>
+            <Logo size="lg" />
 
             {/* Tagline */}
             <p className="text-lg sm:text-xl text-theme opacity-80 max-w-lg leading-relaxed font-medium">
@@ -31,46 +31,46 @@ const Footer = () => {
           {/* Navigation Links */}
           <nav className="flex flex-row space-x-10 lg:space-x-16">
             <button
-              onClick={() => smoothScrollTo('home')}
+              onClick={() => smoothScrollTo("home")}
               className="text-lg sm:text-xl font-semibold cursor-pointer bg-transparent border-none p-0 underline-offset-4 hover:underline transition-colors duration-300"
               style={{
-                color: 'var(--color-text-theme)',
+                color: "var(--color-text-theme)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'var(--color-primary)';
+                e.currentTarget.style.color = "var(--color-primary)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'var(--color-text-theme)';
+                e.currentTarget.style.color = "var(--color-text-theme)";
               }}
             >
               Home
             </button>
             <button
-              onClick={() => smoothScrollTo('why-us')}
+              onClick={() => smoothScrollTo("why-us")}
               className="text-lg sm:text-xl font-semibold cursor-pointer bg-transparent border-none p-0 underline-offset-4 hover:underline transition-colors duration-300"
               style={{
-                color: 'var(--color-text-theme)',
+                color: "var(--color-text-theme)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'var(--color-primary)';
+                e.currentTarget.style.color = "var(--color-primary)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'var(--color-text-theme)';
+                e.currentTarget.style.color = "var(--color-text-theme)";
               }}
             >
               Why Us?
             </button>
             <button
-              onClick={() => smoothScrollTo('features')}
+              onClick={() => smoothScrollTo("features")}
               className="text-lg sm:text-xl font-semibold cursor-pointer bg-transparent border-none p-0 underline-offset-4 hover:underline transition-colors duration-300"
               style={{
-                color: 'var(--color-text-theme)',
+                color: "var(--color-text-theme)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'var(--color-primary)';
+                e.currentTarget.style.color = "var(--color-primary)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'var(--color-text-theme)';
+                e.currentTarget.style.color = "var(--color-text-theme)";
               }}
             >
               Features

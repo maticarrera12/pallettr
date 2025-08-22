@@ -1,8 +1,15 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { useTheme } from "../../app/contexts/ThemeContext";
 
 const ThemeToggle: React.FC = () => {
   const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleTheme = () => {
     const themes = ["light", "dark", "system"] as const;
@@ -18,18 +25,27 @@ const ThemeToggle: React.FC = () => {
     return themes[nextIndex];
   };
 
+  // Valores por defecto para evitar hidratación
+  const defaultTheme = "system";
+  const defaultResolvedTheme = "light";
+
+  // Solo renderizar contenido dinámico después de montar
+  const currentTheme = mounted ? theme : defaultTheme;
+  const currentResolvedTheme = mounted ? resolvedTheme : defaultResolvedTheme;
+  const nextTheme = mounted ? getNextTheme() : "light";
+
   return (
     <button
       type="button"
       onClick={toggleTheme}
       className="group relative flex items-center justify-center w-10 h-10 rounded-full border border-primary bg-transparent hover:bg-primary hover:border-primary transition-all duration-300 ease-in-out"
-      aria-label={`Switch to ${getNextTheme()} theme`}
-      title={`Current theme: ${theme}. Click to cycle themes.`}
+      aria-label={`Switch to ${nextTheme} theme`}
+      title={`Current theme: ${currentTheme}. Click to cycle themes.`}
     >
       {/* Sun Icon - Visible in dark mode */}
       <svg
         className={`absolute w-5 h-5 text-primary transition-all duration-300 ${
-          theme !== "system" && resolvedTheme === "dark"
+          currentTheme !== "system" && currentResolvedTheme === "dark"
             ? "opacity-100 rotate-0 scale-100"
             : "opacity-0 -rotate-90 scale-75"
         } group-hover:text-white`}
@@ -43,7 +59,7 @@ const ThemeToggle: React.FC = () => {
       {/* Moon Icon - Visible in light mode */}
       <svg
         className={`absolute w-5 h-5 text-primary transition-all duration-300 ${
-          theme !== "system" && resolvedTheme === "light"
+          currentTheme !== "system" && currentResolvedTheme === "light"
             ? "opacity-100 rotate-0 scale-100"
             : "opacity-0 rotate-90 scale-75"
         } group-hover:text-white`}
@@ -57,7 +73,7 @@ const ThemeToggle: React.FC = () => {
       {/* System Icon - Visible when theme is system */}
       <svg
         className={`absolute w-5 h-5 text-primary transition-all duration-300 ${
-          theme === "system"
+          currentTheme === "system"
             ? "opacity-100 rotate-0 scale-100"
             : "opacity-0 rotate-180 scale-75"
         } group-hover:text-white`}

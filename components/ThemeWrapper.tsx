@@ -1,20 +1,13 @@
 "use client";
 
 import { useTheme } from "@/app/contexts/ThemeContext";
-import { useEffect } from "react";
 
 export default function ThemeWrapper({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    const root = document.documentElement;
-    root.classList.remove("light", "dark");
-    root.classList.add(resolvedTheme);
-  }, [resolvedTheme]);
-
+  // El ThemeContext ahora maneja toda la lógica del tema
+  // Este wrapper solo asegura que el contexto esté disponible
   return <>{children}</>;
 }
