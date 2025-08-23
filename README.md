@@ -61,17 +61,6 @@ Pallettr is an AI-powered color palette generator that creates stunning, accessi
 - Free tier: 5 requests per 24 hours
 - IP-based tracking with development bypass
 
-## 🚀 Deployment
-
-### Vercel (Recommended)
-1. Connect your GitHub repository to Vercel
-2. Set environment variables in Vercel dashboard
-3. Deploy automatically on push to main branch
-
-### Other Platforms
-- **Netlify**: Compatible with Next.js static export
-- **Railway**: Full-stack deployment support
-- **Docker**: Containerized deployment available
 
 ## 🤝 Contributing
 
