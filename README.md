@@ -34,117 +34,7 @@ Pallettr is an AI-powered color palette generator that creates stunning, accessi
 - **Development**: Get ready-to-use color codes for CSS/SCSS
 - **Creative Projects**: Inspire artistic and design projects
 
-## 🛠️ Installation
 
-### Prerequisites
-
-- Node.js 18+ 
-- npm or yarn
-- Supabase account
-- Google Gemini API key
-
-### Setup
-
-1. **Install dependencies**
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. **Environment Configuration**
-   Create a `.env.local` file in the root directory:
-   ```env
-   # Supabase Configuration
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-   
-   # Google Gemini API
-   GEMINI_API_KEY=your_gemini_api_key
-   
-   # Development (optional)
-   ALLOWED_IPS=127.0.0.1,::1
-   ```
-
-4. **Database Setup**
-   - Create a new Supabase project
-   - Run the following SQL to create required tables:
-   ```sql
-   -- Waitlist table
-   CREATE TABLE waitlist (
-     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-     email TEXT,
-     name TEXT,
-     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-     notified BOOLEAN DEFAULT FALSE
-   );
-   
-   -- API usage tracking
-   CREATE TABLE api_usage (
-     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-     ip_address TEXT NOT NULL,
-     usage_count INTEGER DEFAULT 1,
-     last_used TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-   );
-   
-   -- Create indexes for performance
-   CREATE INDEX idx_api_usage_ip ON api_usage(ip_address);
-   CREATE INDEX idx_waitlist_email ON waitlist(email);
-   ```
-
-5. **Run the development server**
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
-
-6. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-## 🔧 API Endpoints
-
-### Generate Palette
-```
-POST /api/generate-palette
-```
-Generates a color palette based on a text prompt.
-
-**Request Body:**
-```json
-{
-  "prompt": "A modern tech startup with vibrant blues and energetic oranges"
-}
-```
-
-**Response:**
-```json
-{
-  "primary": "#1E40AF",
-  "secondary": "#EA580C",
-  "tertiary": "#059669",
-  "backgroundLight": "#F8FAFC",
-  "backgroundDark": "#0F172A",
-  "cardLight": "#FFFFFF",
-  "cardDark": "#1E293B",
-  "textLight": "#0F172A",
-  "textDark": "#F8FAFC"
-}
-```
-
-### Check Usage
-```
-GET /api/check-usage
-```
-Returns current API usage statistics for the client IP.
-
-### Join Waitlist
-```
-POST /api/waitlist
-```
-Adds an email to the waitlist for early access.
 
 ## 🎨 How It Works
 
@@ -169,7 +59,6 @@ Adds an email to the waitlist for early access.
 
 ### Rate Limiting
 - Free tier: 5 requests per 24 hours
-- Wishlist members: Unlimited access
 - IP-based tracking with development bypass
 
 ## 🚀 Deployment
@@ -225,6 +114,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Made with ❤️ by the Pallettr team**
+**Made with ❤️ by the Matias Carrera**
 
 *Transform your ideas into beautiful, accessible color palettes with the power of AI.*
