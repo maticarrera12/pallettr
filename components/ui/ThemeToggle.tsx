@@ -41,13 +41,13 @@ const ThemeToggle: React.FC = () => {
     <button
       type="button"
       onClick={toggleTheme}
-      className="group relative flex items-center justify-center w-10 h-10 rounded-full border border-primary bg-transparent hover:bg-primary hover:border-primary transition-all duration-300 ease-in-out"
+      className="group relative flex items-center justify-center w-12 h-12 rounded-full border border-primary bg-transparent hover:bg-primary hover:border-primary transition-all duration-300 ease-in-out"
       aria-label={`Switch to ${nextTheme} theme`}
       title={`Current theme: ${currentTheme}. Click to cycle themes.`}
     >
       {/* Sun Icon - Visible in light mode */}
       <svg
-        className={`absolute w-5 h-5 text-primary transition-all duration-300 ${
+        className={`absolute w-6 h-6 text-primary transition-all duration-300 ${
           currentTheme === "light"
             ? "opacity-100 rotate-0 scale-100"
             : "opacity-0 -rotate-90 scale-75"
@@ -61,7 +61,7 @@ const ThemeToggle: React.FC = () => {
 
       {/* Moon Icon - Visible in dark mode */}
       <svg
-        className={`absolute w-5 h-5 text-primary transition-all duration-300 ${
+        className={`absolute w-6 h-6 text-primary transition-all duration-300 ${
           currentTheme === "dark"
             ? "opacity-100 rotate-0 scale-100"
             : "opacity-0 rotate-90 scale-75"
@@ -75,7 +75,7 @@ const ThemeToggle: React.FC = () => {
 
       {/* System Icon - Visible when theme is system */}
       <svg
-        className={`absolute w-5 h-5 text-primary transition-all duration-300 ${
+        className={`absolute w-6 h-6 text-primary transition-all duration-300 ${
           currentTheme === "system"
             ? "opacity-100 rotate-0 scale-100"
             : "opacity-0 rotate-180 scale-75"

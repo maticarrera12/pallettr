@@ -114,15 +114,15 @@ const Navbar = memo(() => {
         aria-hidden="true"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-0 sm:px-0 lg:px-0">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center pl-4">
             <Logo size="md" />
           </div>
 
           {/* Navigation Items */}
-          <div className="flex items-center space-x-3 sm:space-x-4">
+          <div className="flex items-center space-x-3 sm:space-x-4 pr-4">
             {/* Theme Toggle Button */}
             <ThemeToggle />
 
