@@ -22,7 +22,8 @@ const TalkToMeButton: React.FC<TalkToMeButtonProps> = ({
   };
 
   return (
-    <div
+    <a
+      href="mailto:mcarreradev12@gmail.com"
       className={`group flex items-center transform  ${sizeClasses[size]} rounded-md cursor-pointer transition-all duration-300 hover:translate-x-2.5 ${className}`}
     >
       <span className="text-primary font-semibold transform  group-hover:text-primary-hover group-hover:translate-x-1 transition-colors cursor-pointer">
@@ -41,7 +42,7 @@ const TalkToMeButton: React.FC<TalkToMeButtonProps> = ({
           d="M13 7l5 5m0 0l-5 5m5-5H6"
         />
       </svg>
-    </div>
+    </a>
   );
 };
 
