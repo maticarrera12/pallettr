@@ -56,7 +56,7 @@ export const usePaletteGenerator = (): UsePaletteGeneratorReturn => {
           // Rate limit exceeded
           toast.error(data.message || "Rate limit exceeded", {
             description:
-              "You've reached your free trial limit. Please join our waitlist for unlimited access.",
+              "Please join our waitlist for be the first to access the app.",
             action: {
               label: "Join Waitlist",
               onClick: () => {

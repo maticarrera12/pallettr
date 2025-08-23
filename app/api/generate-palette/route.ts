@@ -71,25 +71,57 @@ export async function POST(request: NextRequest) {
 
     // Construct the prompt for Gemini with specific requirements
     const geminiPrompt = `
-Generate a professional color palette based on this description: "${prompt}"
+Generate a professional, vibrant, and harmonious color palette for UI design based on this description: "${prompt}".
 
-CRITICAL REQUIREMENTS:
-- Primary, secondary, and tertiary colors MUST NOT be white (#FFFFFF) or black (#000000)
-- All colors must comply with WCAG AA contrast standards (minimum 4.5:1 ratio)
-- Primary colors should have 10–35% lightness and 85–100% saturation (EXTREMELY BRIGHT, STRONG, and VIBRANT)
-- Secondary colors should have 10–35% lightness and 80–100% saturation (VERY BRIGHT, STRONG, and VIBRANT)
-- Tertiary colors should have 10–35% lightness and 75–100% saturation (BRIGHT, STRONG, and VIBRANT)
-- Colors must generally be varied unless the user explicitly requests a monochromatic palette or a theme that demands dominance of one hue.
-- Background colors should be subtle, soft, and never pure white/black
-- Card colors must provide clear separation from the background and ensure excellent text contrast
-- Text colors must always ensure outstanding readability across all backgrounds
+1. Color Roles and Requirements:
 
-STYLE AND MEANING REQUIREMENTS:
-- Always generate palettes that are **harmonious and professional** using color theory (analogous, triadic, or complementary schemes)
-- Colors should feel **dynamic, lively, and energetic by default** unless the user’s prompt specifies a calm, muted, or minimalistic vibe
-- If the prompt contains **adjectives** (e.g., "playful", "elegant", "futuristic"), strongly reflect them in the palette’s mood
-- Always balance **aesthetic appeal, accessibility, and theme relevance**
-- Ensure the palette works well in both light and dark modes
+Primary color: 1 color, Lightness 10–35%, Saturation 85–100% (EXTREMELY BRIGHT, STRONG, VIBRANT).
+
+Secondary color: 1 color, Lightness 10–35%, Saturation 80–100% (VERY BRIGHT, STRONG, VIBRANT).
+
+Tertiary color: 1 color, Lightness 10–35%, Saturation 75–100% (BRIGHT, STRONG, VIBRANT).
+
+Background colors: 2 colors (Light and Dark), subtle and soft, never pure white (#FFFFFF) or pure black (#000000).
+
+Card colors: 2 colors (Light and Dark), distinct from background, ensuring excellent text contrast.
+
+Text colors: black and white variants, always readable over all backgrounds and cards.
+
+All colors must comply with WCAG AA standards (contrast ratio ≥ 4.5:1).
+
+Colors should generally be varied and distinct unless a monochromatic palette is explicitly requested.
+
+2. Style and Mood:
+
+Palette must be harmonious, professional, and energetic by default.
+
+Reflect adjectives like 'playful', 'elegant', or 'futuristic' if provided.
+
+Palette must work well in both light and dark UI modes.
+
+3. Color Theory Awareness:
+
+Analogous: colors next to each other on the color wheel, creating smooth harmony.
+
+Complementary: colors opposite each other on the wheel, creating strong contrast and balance.
+
+Split-complementary: one main color with the two colors adjacent to its complement, offering contrast without intensity.
+
+Monochromatic: variations of a single hue using different lightness and saturation levels, creating cohesion and softness. Understand this as a concept, but only use it if specifically requested.
+
+Triadic: three colors evenly spaced on the wheel, for balanced dynamism.
+
+Tetradic (double-complementary): four colors arranged as two complementary pairs, giving richness while maintaining harmony.
+
+4. Output Requirements:
+
+Provide exactly: 1 Primary, 1 Secondary, 1 Tertiary, 2 Backgrounds (Light and Dark), 2 Card colors (Light and Dark), and 2 Text colors (black and white).
+
+Include hex codes, RGB, and HSL values.
+
+Label each color with its role.
+
+Ensure excellent accessibility, contrast, and readability.
 
 OUTPUT FORMAT:
 Return ONLY a JSON object with this exact structure:
