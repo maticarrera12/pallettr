@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function WishlistPage() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,9 +14,7 @@ export default function WishlistPage() {
     try {
       const response = await fetch("/api/waitlist", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
@@ -28,7 +24,6 @@ export default function WishlistPage() {
         toast.success("Successfully joined the waitlist!");
         setEmail("");
       } else {
-        // Show Sonner toast for errors
         if (
           data.error?.includes("already exists") ||
           data.error?.includes("already in use")
@@ -49,31 +44,25 @@ export default function WishlistPage() {
 
   return (
     <div className="min-h-screen bg-background-light dark:bg-background-dark flex items-center justify-center p-2">
-      <div className="max-w-[480px]">
-        <div className="text-center mb-8 px-4">
-          <h1 className="text-3xl font-bold text-theme mb-4">
-            Join Our Waitlist
-          </h1>
-          <p className="text-base text-theme opacity-80 px-2">
-            Be the first to know when we launch our AI-powered color palette
-            generator!
-          </p>
-        </div>
+      <div className="max-w-[480px] text-center">
+        <h1 className="text-4xl font-extrabold text-theme mb-3">
+          🎨 Discover stunning color palettes instantly
+        </h1>
+        <p className="text-lg text-theme/80 mb-6">
+          Join our waitlist and be the first to explore AI-powered color
+          palettes tailored for your creativity!
+        </p>
 
         <form onSubmit={handleSubmit} className="space-y-4 px-4">
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-theme mb-2"
-            >
-              Email
-            </label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-card-dark dark:border-card-light rounded-lg bg-card-light dark:bg-card-dark text-theme placeholder-theme opacity-60 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full px-4 py-3 border border-card-dark dark:border-card-light rounded-lg 
+                         bg-card-light dark:bg-card-dark text-theme placeholder-theme opacity-60 
+                         focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               placeholder="Enter your email"
               required
             />
@@ -82,11 +71,18 @@ export default function WishlistPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-primary hover:bg-primary-hover active:bg-primary-active text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-primary hover:bg-primary-hover active:scale-95 
+                       text-white font-semibold py-3 px-6 rounded-lg 
+                       transition-all duration-300 disabled:opacity-50 
+                       hover:shadow-xl hover:scale-[1.02]"
           >
-            {isLoading ? "Joining..." : "Join Waitlist"}
+            {isLoading ? "⏳ Joining..." : "✨ Join the Waitlist"}
           </button>
         </form>
+
+        <p className="text-xs text-theme/60 mt-3">
+          🔒 No spam. Only updates about our palette generator.
+        </p>
       </div>
     </div>
   );

@@ -27,7 +27,7 @@ const Hero = () => {
       id="home"
       className="flex flex-col min-h-dvh w-full max-w-full overflow-hidden relative lg:flex-row px-4 sm:px-6 lg:px-8 pt-8"
     >
-      <div className="hero-section flex-1 flex flex-col  items-start sm:px-4 lg:px-8 relative z-10">
+      <div className="hero-section md:flex-1 flex flex-col  items-start sm:px-4 lg:px-8 relative z-10">
         <div className="w-full max-w-4xl">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold break-words leading-[1.1] tracking-tight mb-4">
             Turn Ideas <br /> Into Art <br /> With Stunning <br />
